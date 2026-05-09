@@ -193,7 +193,12 @@ const AdminOrders = () => {
 
                    {order.scheduled_date && (
                      <p className="text-xs text-muted-foreground">
-                       📅 {(() => { const [y, m, d] = order.scheduled_date!.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString(); })()}
+                       📅 {(() => {
+                         const parts = order.scheduled_date.split("-").map(Number);
+                         if (parts.length !== 3 || parts.some(isNaN)) return order.scheduled_date;
+                         const [y, m, d] = parts;
+                         return new Date(y, m - 1, d).toLocaleDateString();
+                       })()}
                      </p>
                    )}
 
