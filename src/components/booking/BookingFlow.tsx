@@ -230,12 +230,14 @@ const BookingFlow = () => {
 
   const totalSteps = steps.length;
   totalStepsRef.current = totalSteps;
-  const currentStep = steps[Math.min(stepIndex, totalSteps - 1)];
-  const safeIndex = Math.min(stepIndex, totalSteps - 1);
+  const safeIndex = totalSteps > 0 ? Math.min(stepIndex, totalSteps - 1) : 0;
+  const currentStep = totalSteps > 0 ? steps[safeIndex] : undefined;
 
-  if (stepIndex !== safeIndex) {
-    setStepIndex(safeIndex);
-  }
+  useEffect(() => {
+    if (totalSteps > 0 && stepIndex !== safeIndex) {
+      setStepIndex(safeIndex);
+    }
+  }, [stepIndex, safeIndex, totalSteps]);
 
   const goToStep = (s: number, pushHistory = true) => {
     setStepIndex(s);
@@ -271,7 +273,7 @@ const BookingFlow = () => {
 
         <BookingProgress currentStep={safeIndex} totalSteps={totalSteps} />
 
-        <AnimatePresence mode="wait">
+        {!currentStep ? null : <AnimatePresence mode="wait">
           <motion.div
             key={currentStep.id}
             initial={{ opacity: 0, x: 20 }}
@@ -282,9 +284,9 @@ const BookingFlow = () => {
           >
             {currentStep.render(data, update)}
           </motion.div>
-        </AnimatePresence>
+        </AnimatePresence>}
 
-        <div className="flex justify-between mt-10 max-w-md mx-auto">
+        {currentStep && <div className="flex justify-between mt-10 max-w-md mx-auto">
           <Button
             variant="outline"
             onClick={() => goToStep(Math.max(0, safeIndex - 1))}
@@ -302,7 +304,7 @@ const BookingFlow = () => {
               Continue <ArrowRight className="w-4 h-4 ml-1" />
             </Button>
           )}
-        </div>
+        </div>}
       </div>
     </div>
   );
