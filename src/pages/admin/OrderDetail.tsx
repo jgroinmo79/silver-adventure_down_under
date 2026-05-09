@@ -38,7 +38,7 @@ const AdminOrderDetail = () => {
       const { data: orderData, error: orderError } = await supabase
         .from("orders")
         .select(`*, monuments (*)`)
-        .eq("id", id!)
+        .eq("id", id ?? "")
         .single();
       if (orderError) throw orderError;
 
@@ -217,7 +217,7 @@ const AdminOrderDetail = () => {
         const { error } = await supabase
           .from("orders")
           .update({ scheduled_date: allDates[0], status: "scheduled" })
-          .eq("id", id!);
+          .eq("id", id ?? "");
         if (error) throw error;
       }
     },

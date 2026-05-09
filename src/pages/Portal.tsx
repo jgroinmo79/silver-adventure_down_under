@@ -162,7 +162,7 @@ const Portal = () => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .maybeSingle();
       if (error) throw error;
       return data;
@@ -176,7 +176,7 @@ const Portal = () => {
       const { data, error } = await supabase
         .from("monuments")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -190,7 +190,7 @@ const Portal = () => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -204,7 +204,7 @@ const Portal = () => {
       const { data, error } = await supabase
         .from("subscriptions")
         .select("*, monuments (cemetery_name)")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -218,7 +218,7 @@ const Portal = () => {
       const { data, error } = await supabase
         .from("invoices")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;

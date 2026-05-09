@@ -37,7 +37,7 @@ const GraveDetail = ({ monumentId }: GraveDetailProps) => {
         .from("orders")
         .select("*")
         .eq("monument_id", monumentId)
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -67,7 +67,7 @@ const GraveDetail = ({ monumentId }: GraveDetailProps) => {
         .from("service_logs")
         .select("*")
         .eq("monument_id", monumentId)
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("service_date", { ascending: false });
       if (error) throw error;
       return data;
@@ -82,7 +82,7 @@ const GraveDetail = ({ monumentId }: GraveDetailProps) => {
         .from("subscriptions")
         .select("*")
         .eq("monument_id", monumentId)
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();

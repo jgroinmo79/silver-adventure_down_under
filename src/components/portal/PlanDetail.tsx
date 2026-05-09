@@ -29,7 +29,7 @@ const PlanDetail = ({ subscription }: PlanDetailProps) => {
       const { data, error } = await supabase
         .from("support_tickets")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .in("category", ["pause_plan", "cancel_plan"])
         .in("status", ["received", "in_progress"])
         .order("created_at", { ascending: false })
@@ -43,8 +43,9 @@ const PlanDetail = ({ subscription }: PlanDetailProps) => {
 
   const submitRequest = useMutation({
     mutationFn: async () => {
+      if (!user) throw new Error("Not authenticated");
       const { error } = await supabase.from("support_tickets").insert({
-        user_id: user!.id,
+        user_id: user?.id ?? "",
         monument_id: subscription.monument_id,
         category: requestType === "pause" ? "pause_plan" : "cancel_plan",
         subject: `Request to ${requestType} ${plan?.label ?? subscription.plan} plan`,

@@ -40,7 +40,7 @@ const HistoryTab = ({ orders }: HistoryTabProps) => {
       const { data, error } = await supabase
         .from("service_logs")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .order("service_date", { ascending: false });
       if (error) throw error;
       return data;
@@ -55,7 +55,7 @@ const HistoryTab = ({ orders }: HistoryTabProps) => {
       const { data, error } = await supabase
         .from("photo_records")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id ?? "")
         .eq("client_visible", true)
         .order("created_at", { ascending: false });
       if (error) throw error;
