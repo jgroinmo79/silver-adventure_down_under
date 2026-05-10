@@ -187,7 +187,11 @@ const CheckoutStep = ({ data }: Props) => {
         const win = window.open(result.url, "_blank");
         if (!win) {
           // Popup blocked — fall back to top-level navigation
-          window.top ? (window.top.location.href = result.url) : (window.location.href = result.url);
+          if (window.top) {
+            window.top.location.href = result.url;
+          } else {
+            window.location.href = result.url;
+          }
         }
       } else {
         throw new Error("No checkout URL returned");

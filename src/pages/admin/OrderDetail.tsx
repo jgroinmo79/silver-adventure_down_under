@@ -141,7 +141,9 @@ const AdminOrderDetail = () => {
           setApprovedAt(parsed.approvedAt ?? null);
           return;
         }
-      } catch {}
+      } catch (e) {
+        console.error("Failed to parse saved optimizer state:", e);
+      }
     }
 
     if (!pairedSchedule || pairedSchedule.length === 0) {

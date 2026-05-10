@@ -320,6 +320,7 @@ function PinLocationMap({ memorial, onSave, onCancel }: {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
+  const initialOrderRef = useRef(memorial.orders[0]);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [saving, setSaving] = useState(false);
   const [locating, setLocating] = useState(false);
@@ -327,7 +328,7 @@ function PinLocationMap({ memorial, onSave, onCancel }: {
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
     // Use cemetery coords from first order if available, else default
-    const firstOrder = memorial.orders[0];
+    const firstOrder = initialOrderRef.current;
     const cemeteryLat = firstOrder?.monuments?.cemetery_lat;
     const cemeteryLng = firstOrder?.monuments?.cemetery_lng;
     const center: [number, number] = cemeteryLat && cemeteryLng

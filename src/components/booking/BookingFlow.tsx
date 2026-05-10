@@ -183,7 +183,7 @@ const BookingFlow = () => {
     });
 
     return base;
-  }, [intent, isFlowerOnly, needsFlowerDates, flowerPickLimit, data.selectedOffer, data.selectedMaintenancePlan, data.selectedFlowerPlan]);
+  }, [isFlowerOnly, needsFlowerDates, flowerPickLimit, data.selectedOffer, data.selectedMaintenancePlan, data.selectedFlowerPlan]);
 
   // Track abandoned lead on step changes
   useEffect(() => {
@@ -226,7 +226,7 @@ const BookingFlow = () => {
 
     const timer = setTimeout(saveProgress, 1500);
     return () => clearTimeout(timer);
-  }, [stepIndex, data.shopperEmail, data.shopperName, data.shopperPhone, data.cemeteryName, steps]);
+  }, [stepIndex, data.shopperEmail, data.shopperName, data.shopperPhone, data.cemeteryName, data.intent, data.monumentType, data.selectedFlowerOnly, data.selectedFlowerPlan, data.selectedMaintenancePlan, data.selectedOffer, steps]);
 
   const totalSteps = steps.length;
   totalStepsRef.current = totalSteps;
